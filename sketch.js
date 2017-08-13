@@ -23,34 +23,37 @@ let lineYb = new Array(60);
 
 let m;
 
+// Seconds
+let cx, cy;
+let secondsRadius;
+
 function setup() {
-  background(2);
   createCanvas(window.innerWidth, window.innerHeight);
   stroke(255);
 
   for (let i = 0; i < 60; i ++) {
-    if (i % 4 == 0) {
+    if(i % 4 == 0) {
       lineXa [i] = random(aX, bX);
       lineYa [i] = random(aY, bY);
       lineXb [i] = random(bX, cX);
       lineYb [i] = random(bY, cY);
     }
 
-    if (i % 4 == 1) {
+    if(i % 4 == 1) {
       lineXa [i] = random(bX, cX);
       lineYa [i] = random(bY, cY);
       lineXb [i] = random(dX, cX);
       lineYb [i] = random(dY, cY);
     }
 
-    if (i % 4 == 2) {
+    if(i % 4 == 2) {
       lineXa [i] = random(dX, cX);
       lineYa [i] = random(cY, dY);
       lineXb [i] = random(aX, dX);
       lineYb [i] = random(aY, dY);
     }
 
-    if (i % 4 == 3) {
+    if(i % 4 == 3) {
       lineXa [i] = random(aX, dX);
       lineYa [i] = random(aY, dY);
       lineXb [i] = random(aX, bX);
@@ -60,7 +63,7 @@ function setup() {
 }
 
 function draw() {
-  background(20);
+  background(0);
 
   // hours
   stroke(225);
@@ -81,5 +84,31 @@ function draw() {
 
   for (let i = 0; i < minute(); i ++) {
     line(lineXa [i], lineYa [i], lineXb [i], lineYb [i]);
+  }
+
+  // Seconds
+  // subtract HALF_PI to make them start at the top
+  let radius = min(window.innerWidth, window.innerHeight) / 8;
+  secondsRadius = radius * 0.18;
+
+  cx = window.innerWidth - window.innerWidth / 2;
+  cy = window.innerHeight - window.innerHeight / 2;
+
+  let s = map(second(), 0, 60, 0, TWO_PI) - HALF_PI;
+
+  // Draw the hands of the clock
+  stroke(225);
+  strokeWeight(2);
+
+  for (var i = 0; i < width; i +=20) {   // Seconds all linked to clock in middle of grd
+    line(cx, cy, cx + cos(s) * secondsRadius, cy + sin(s) * secondsRadius);
+    line(cx + window.innerWidth/6, cy, cx + cos(s) * secondsRadius, cy + sin(s) * secondsRadius);
+    line(cx + window.innerWidth/6, cy - window.innerHeight/6, cx + cos(s) * secondsRadius, cy + sin(s) * secondsRadius);
+    line(cx - window.innerWidth/6, cy, cx + cos(s) * secondsRadius, cy + sin(s) * secondsRadius);
+    line(cx, cy + window.innerHeight/6, cx + cos(s) * secondsRadius, cy + sin(s) * secondsRadius);
+    line(cx, cy - window.innerHeight/6, cx + cos(s) * secondsRadius, cy + sin(s) * secondsRadius);
+    line(cx - window.innerWidth/6, cy - window.innerHeight/6, cx + cos(s) * secondsRadius, cy + sin(s) * secondsRadius);
+    line(cx - window.innerWidth/6, cy + window.innerHeight/6, cx + cos(s) * secondsRadius, cy + sin(s) * secondsRadius);
+    line(cx + window.innerWidth/6, cy + window.innerHeight/6, cx + cos(s) * secondsRadius, cy + sin(s) * secondsRadius);
   }
 }
