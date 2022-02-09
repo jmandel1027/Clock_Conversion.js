@@ -26,7 +26,7 @@ function setup() {
   createCanvas(800, 800);
   stroke(255);
   
-  for (var i = 0; i < 60; i ++) {
+  /*for (var i = 0; i < 60; i ++) {
     if (i%4 === 0) {
       lineXa [i]  = random(aX, bX);
       lineYa [i]  = random(aY, bY); 
@@ -54,6 +54,35 @@ function setup() {
       lineXb [i]  = random(aX, bX);
       lineYb [i]  = random(aY, bY);
     }
+  }*/
+
+  for (var i = 0; i < 60; i ++) {
+    switch (i%4) {
+      case 0:
+        lineXa [i]  = random(aX, bX);
+        lineYa [i]  = random(aY, bY); 
+        lineXb [i]  = random(bX, cX);
+        lineYb [i]  = random(bY, cY);
+        break;
+      case 1: 
+        lineXa [i]  = random(bX, cX);
+        lineYa [i]  = random(bY, cY); 
+        lineXb [i]  = random(dX, cX);
+        lineYb [i]  = random(dY, cY);
+        break;
+      case 2:
+        lineXa [i]  = random(dX, cX);
+        lineYa [i]  = random(cY, dY);
+        lineXb [i]  = random(aX, dX); 
+        lineYb [i]  = random(aY, dY);
+        break;
+      case 3:
+        lineXa [i]  = random(aX, dX);
+        lineYa [i]  = random(aY, dY); 
+        lineXb [i]  = random(aX, bX);
+        lineYb [i]  = random(aY, bY);
+        break;
+    }
   }
   
   var radius = min(width, height) / 2;
@@ -72,9 +101,9 @@ function draw() {
   strokeWeight(5);
   translate(225, 225);
 
-  for (var i = 0; i < hour(); i++) {
+  /*for (var i = 0; i < hour(); i++) {
     line(x1(t + i), y1(t + i), x2(t + i), y2(t + i));
-  }
+  }*/
   t += 0.05;
 
   stroke(225);
@@ -82,16 +111,30 @@ function draw() {
   
   for (var i = 0; i < minute(); i ++) {
     line(lineXa [i], lineYa [i], lineXb [i], lineYb [i]);
+    switch (i%4) {
+      case 0:
+        strokeWeight(1);
+        break;
+      case 1:
+        strokeWeight(1.5);
+        break;
+      case 2:
+        strokeWeight(2);
+        break;
+      case 3:
+        strokeWeight(2.5); 
+        break; 
+    }
   }
   
-  noStroke();
+  //noStroke();
 
   // Angles for sin() and cos() start at 3 o'clock;
   // subtract HALF_PI to make them start at the top
-  var s = map(second(), 0, 60, 0, TWO_PI) - HALF_PI;
+  // var s = map(second(), 0, 60, 0, TWO_PI) - HALF_PI;
 
   // Draw the hands of the clock
-  stroke(225);
+  /*stroke(225);
   strokeWeight(2);
 
   for (var i = 0; i < width; i +=20) {   // Seconds all linked to clock in middle of grd
@@ -104,5 +147,5 @@ function draw() {
     line(cx+120, cy-120, cx + cos(s) * secondsRadius, cy + sin(s) * secondsRadius);
     line(cx-120, cy+120, cx + cos(s) * secondsRadius, cy + sin(s) * secondsRadius);
     line(cx+120, cy+120, cx + cos(s) * secondsRadius, cy + sin(s) * secondsRadius);
-  }
+  }*/
 }
